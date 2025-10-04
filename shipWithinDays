@@ -1,0 +1,56 @@
+class Solution {
+   public:
+   int mincap(vector<int> &v,int mid)
+   {
+    int n=v.size();
+    int totalday=1;
+    int sum=0;
+    for(int i=0;i<n;i++)
+    { 
+        if(sum + v[i]>mid)
+        {
+            totalday++;
+sum=v[i];
+        }
+        else
+        {
+            sum+=v[i];
+        }
+        
+    }
+return totalday;
+   }
+public:
+    int shipWithinDays(vector<int>& weights, int days) 
+    {
+      int n=weights.size();
+      int minimum=INT_MIN;
+      
+      int maximum=0;
+       for(int i=0;i<n;i++)
+       {
+        minimum=max(minimum,weights[i]);
+        maximum+=weights[i];
+       }
+       
+       int low=minimum;
+       int high=maximum;
+       int ans=0;
+
+       while(low<=high)
+       {
+        int mid=(low+high)/2;
+        if(mincap(weights,mid)<=days)
+        {
+            ans=mid;
+           high=mid-1;
+        }
+        else
+        {
+           low=mid+1;
+        }
+       }
+       
+return ans;
+    }
+};
